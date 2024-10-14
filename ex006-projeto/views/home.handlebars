@@ -1,0 +1,11 @@
+<h1>Olá!</h1>
+<h2>Veja a lista de posts abaixo!</h2>
+
+{{#each posts}}
+  <small>{{createdAt}}</small>
+  <h3>{{titulo}}</h3>
+  <p>{{conteudo}}</p>
+  <hr />
+{{/each}}
+
+<pre>{{posts}}</pre>
