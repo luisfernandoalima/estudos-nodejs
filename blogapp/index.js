@@ -9,6 +9,10 @@ const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const flash = require("connect-flash");
+const usuario = require('./routes/usuario')
+const passport = require('passport')
+require('./config/auth')(passport)
+
 
 // Configurações
 app.use(
@@ -19,11 +23,16 @@ app.use(
   })
 );
 
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(flash());
 
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error")
+  res.locals.user = req.user || null
   next();
 });
 
@@ -56,6 +65,7 @@ mongoose
 
 app.use("/", routes);
 app.use("/admin", admin);
+app.use('/usuarios', usuario)
 
 //Outros
 const PORT = 8081;
